@@ -19,6 +19,7 @@ label_web=Label(text="Website:")
 label_web.grid(column=1,row=1)
 
 entry_web=Entry(width=38)
+entry_web.focus()
 entry_web.grid(column=2,row=1,columnspan=2)
 
 label_user=Label(text="Username:")
@@ -26,6 +27,7 @@ label_user.grid(column=1,row=3)
 
 entry_user=Entry(width=38)
 entry_user.grid(column=2,row=3,columnspan=2)
+entry_user.insert(0,"juliemytruong@gmail.com")
 
 label_pw=Label(text="Password:")
 label_pw.grid(column=1,row=4)
