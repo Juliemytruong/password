@@ -1,8 +1,21 @@
 
 from tkinter import *
+import random
+import string
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+def gen_pw():
+
+
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def add_to_file():
+    text_for_add=f"\n{entry_web.get()}|{entry_user.get()}|{entry_pw.get()}"
+    print(text_for_add)
+    f = open("password.txt", "a")
+    f.write(text_for_add)
+    f.close()
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window= Tk()
@@ -12,7 +25,7 @@ window.config(padx=50, pady=50)
 
 canvas=Canvas(width=200, height=200)
 logo=PhotoImage(file="logo.png")
-canvas.create_image(100,100,image=logo)
+canvas.create_image(100,80,image=logo)
 canvas.grid(column=2,row=0)
 
 label_web=Label(text="Website:")
@@ -38,7 +51,10 @@ entry_pw.grid(column=2,row=4)
 button_gen = Button(text="generate",width=8)
 button_gen.grid(column=3,row=4)
 
-button_add = Button(text="add",width=33)
+button_add = Button(text="add",width=33,command=add_to_file)
 button_add.grid(column=2,row=5,columnspan=2)
+
+
+
 
 window.mainloop()
