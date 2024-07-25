@@ -18,11 +18,15 @@ def add_to_file():
     text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
     print(text_for_add)
 
-    mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
+    if entry_web.get()==0 OR entry_pw.get()==0:
+        messagebox.OK("check data")
 
-    f = open("password.txt", "a")
-    f.write(text_for_add)
-    f.close()
+
+    mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
+    if mess_result:
+        f = open("password.txt", "a")
+        f.write(text_for_add)
+        f.close()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
