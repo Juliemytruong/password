@@ -1,5 +1,6 @@
 
 from tkinter import *
+from tkinter import messagebox
 import random
 import string
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -14,8 +15,11 @@ def gen_pw():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_to_file():
-    text_for_add=f"\n{entry_web.get()}|{entry_user.get()}|{entry_pw.get()}"
+    text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
     print(text_for_add)
+
+    mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
+
     f = open("password.txt", "a")
     f.write(text_for_add)
     f.close()
