@@ -5,11 +5,42 @@ import random
 import string
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def gen_pw():
-    global entry_pw
-    res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-    entry_pw.delete(0,END)
-    entry_pw.insert(0,f"{res}")
-    print(res)
+    # global entry_pw
+    # res = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+    # entry_pw.delete(0,END)
+    # entry_pw.insert(0,f"{res}")
+    # print(res)
+
+    # Password Generator Project
+    import random
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+               'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+               'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+
+    nr_letters = random.randint(8, 10)
+    nr_symbols = random.randint(2, 4)
+    nr_numbers = random.randint(2, 4)
+
+    password_list = []
+
+    for char in range(nr_letters):
+        password_list.append(random.choice(letters))
+
+    for char in range(nr_symbols):
+        password_list += random.choice(symbols)
+
+    for char in range(nr_numbers):
+        password_list += random.choice(numbers)
+
+    random.shuffle(password_list)
+
+    password = ""
+    for char in password_list:
+        password += char
+
+    entry_pw.insert(0,password)
 
 
 
@@ -18,16 +49,18 @@ def add_to_file():
     text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
     print(text_for_add)
 
-    if entry_web.get()==0 OR entry_pw.get()==0:
-        messagebox.OK("check data")
+    if len(entry_web.get())==0 or len(entry_pw.get())==0:
+        messagebox.showinfo("check data","check for empty cells")
+    else:
 
+        mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
+        if mess_result:
+            f = open("password.txt", "a")
+            f.write(text_for_add)
+            f.close()
 
-    mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
-    if mess_result:
-        f = open("password.txt", "a")
-        f.write(text_for_add)
-        f.close()
-
+    entry_web.delete(0,END)
+    entry_pw.delete(0,END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 window= Tk()
