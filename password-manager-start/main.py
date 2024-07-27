@@ -25,20 +25,15 @@ def gen_pw():
 
     password_list = []
 
-    for char in range(nr_letters):
-        password_list.append(random.choice(letters))
+    pw_letter = [random.choice(letters) for _ in range(nr_letters)]
+    pw_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    pw_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
 
-    for char in range(nr_symbols):
-        password_list += random.choice(symbols)
-
-    for char in range(nr_numbers):
-        password_list += random.choice(numbers)
+    password_list = pw_letter + pw_numbers + pw_symbols
 
     random.shuffle(password_list)
 
-    password = ""
-    for char in password_list:
-        password += char
+    password =''.join(password_list)
 
     entry_pw.insert(0,password)
 
