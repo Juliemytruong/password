@@ -2,6 +2,7 @@
 from tkinter import *
 from tkinter import messagebox
 import pyperclip
+import json
 import random
 import string
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -24,7 +25,7 @@ def gen_pw():
     nr_symbols = random.randint(2, 4)
     nr_numbers = random.randint(2, 4)
 
-    password_list = []
+  #  password_list = []
 
     pw_letter = [random.choice(letters) for _ in range(nr_letters)]
     pw_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
@@ -43,17 +44,22 @@ def gen_pw():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def add_to_file():
-    text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
-    print(text_for_add)
+    #text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
+    #print(text_for_add)
+
+    text_for_add={
+        entry_web.get():{
+            "email":entry_user.get(),
+            "password":entry_pw.get()
+        }
+    }
+
 
     if len(entry_web.get())==0 or len(entry_pw.get())==0:
         messagebox.showinfo("check data","check for empty cells")
     else:
-
-        mess_result=messagebox.askokcancel("verify",f"do you want to save \n {text_for_add}  \n\n to file?")
-        if mess_result:
-            f = open("password.txt", "a")
-            f.write(text_for_add)
+            f = open("password.json", "w")
+            json.dump(text_for_add,f,indent=4)
             f.close()
 
     entry_web.delete(0,END)
