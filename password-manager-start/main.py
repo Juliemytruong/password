@@ -47,10 +47,15 @@ def add_to_file():
     #text_for_add=f"\n{entry_web.get()} | {entry_user.get()} | {entry_pw.get()}"
     #print(text_for_add)
 
-    text_for_add={
-        entry_web.get():{
-            "user name":entry_user.get(),
-            "password":entry_pw.get()
+
+    web=entry_web.get()
+    pw=entry_pw.get()
+    user=entry_web.get()
+
+    new_data={
+        web:{
+            "user name":user,
+            "password":pw
         }
     }
 
@@ -58,36 +63,41 @@ def add_to_file():
     if len(entry_web.get())==0 or len(entry_pw.get())==0:
         messagebox.showinfo("check data","check for empty cells")
     else:
+        try:
+            with open("data.json", "r") as data_file:
+                #Reading old data
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            #Updating old data with new data
+            data.update(new_data)
 
-        with open("password.json", "r") as f:
-            data=json.load(f)
-        print(data)
-
-        with open("password.json","w"):
-
-            data.update(text_for_add)
-            json.dump(data,f,indent=4)
-
-        f.close()
+            with open("data.json", "w") as data_file:
+                #Saving updated data
+                json.dump(data, data_file, indent=4)
+        finally:
+            entry_web.delete(0, END)
+            entry_pw.delete(0, END)
 
 
 
-        entry_web.delete(0,END)
-        entry_pw.delete(0,END)
 
 
 
 #----------------------------findPW---------------------------------------#
 
 def find_password():
-    with open("password.json","r") as dataA:
+    print("hello")
+    with open("data.json","r") as dataA:
         datap=json.load(dataA)
-    print(datap)
+        print(datap)
 
     try:
         return_data=datap[entry_web.get()]
         print(return_data)
-        return_user=return_data["email"]
+        return_user=return_data["user name"]
         return_pw=return_data["password"]
     except KeyError:
         messagebox.showinfo("return info","no password created")
